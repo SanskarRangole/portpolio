@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Sanskar Rangole - Interactive Portfolio</title>
+<style>
+  /* Reset */
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0; font-family: 'Poppins', sans-serif;
+    background: #0d0d0d; color: #f0f0f0;
+    overflow-x: hidden;
+  }
+  a {
+    color: #ffa53c;
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  a:hover {
+    color: #ffb965;
+  }
+
+  /* Navigation */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    background: rgba(13, 13, 13, 0.9);
+    display: flex; justify-content: center;
+    padding: 1rem 0;
+    z-index: 1000;
+    box-shadow: 0 0 15px #ffa53c44;
+  }
+  nav ul {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+    margin: 0; padding: 0;
+  }
+  nav ul li {
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1.1rem;
+    position: relative;
+  }
+  nav ul li::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background: #ffa53c;
+    bottom: -4px;
+    left: 0;
+    transition: width 0.3s;
+  }
+  nav ul li:hover::after,
+  nav ul li.active::after {
+    width: 100%;
+  }
+
+  /* Header / Hero */
+  header {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #1a1a1a, #111);
+    text-align: center;
+    padding: 0 1rem;
+  }
+  header img {
+    width: 200px;
+    height: 230px;
+    border-radius: 50%;
+    border: 4px solid #ffa53c;
+    box-shadow: 0 0 30px #ffa53c77;
+    margin-bottom: 1rem;
+    animation: float 4s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+  }
+  header h1 {
+    font-size: 3.5rem;
+    margin: 0 0 0.2rem 0;
+    color: #ffa53c;
+    text-shadow: 0 0 12px #ffa53caa;
+  }
+  header p {
+    font-size: 1.4rem;
+    max-width: 420px;
+    color: #ddd;
+  }
+
+  /* Sections */
+  section {
+    padding: 4rem 1.5rem;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  section h2 {
+    font-size: 2.8rem;
+    color: #ffa53c;
+    margin-bottom: 2rem;
+    border-bottom: 3px solid #ffa53c;
+    display: inline-block;
+    padding-bottom: 6px;
+  }
+
+  /* Skills - animated bars */
+  .skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: center;
+  }
+  .skill {
+    flex: 1 1 220px;
+    background: #222;
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    box-shadow: 0 0 15px #000;
+    transition: transform 0.3s ease;
+    cursor: default;
+  }
+  .skill:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 25px #ffa53c;
+  }
+  .skill h3 {
+    margin: 0 0 0.8rem 0;
+    font-weight: 700;
+    font-size: 1.3rem;
+  }
+  .skill .bar-container {
+    background: #444;
+    border-radius: 20px;
+    overflow: hidden;
+    height: 20px;
+  }
+  .skill .bar {
+    height: 100%;
+    background: #ffa53c;
+    width: 0;
+    border-radius: 20px 0 0 20px;
+    transition: width 2s ease-in-out;
+  }
+
+  /* Projects Grid */
+  .projects {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+  }
+  .project-card {
+    background: #222;
+    padding: 1.5rem;
+    border-radius: 16px;
+    box-shadow: 0 0 20px #000;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .project-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 0 35px #ffa53c;
+  }
+  .project-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at center, #ffa53c55 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+  .project-card:hover::before {
+    opacity: 1;
+  }
+  .project-card h3 {
+    margin: 0 0 1rem 0;
+    color: #ffa53c;
+  }
+  .project-card p {
+    color: #ddd;
+    line-height: 1.4;
+  }
+
+  /* Contact Form */
+  form {
+    max-width: 500px;
+    margin: 0 auto;
+    background: #222;
+    padding: 2rem 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 0 30px #000;
+  }
+  form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #ffa53c;
+  }
+  form input, form textarea {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    margin-bottom: 1.5rem;
+    border: none;
+    border-radius: 8px;
+    background: #111;
+    color: #f0f0f0;
+    font-size: 1rem;
+    resize: vertical;
+    transition: background 0.3s ease;
+  }
+  form input:focus, form textarea:focus {
+    background: #222;
+    outline: 2px solid #ffa53c;
+  }
+  form button {
+    background: #ffa53c;
+    border: none;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    color: #1a1a1a;
+    font-weight: 700;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    width: 100%;
+  }
+  form button:hover {
+    background: #ffb965;
+  }
+  .form-success {
+    color: #a6ff9c;
+    font-weight: 600;
+    text-align: center;
+    margin-top: -1rem;
+    margin-bottom: 1rem;
+  }
+
+  /* Footer */
+  footer {
+    padding: 2rem;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #666;
+    background: #111;
+  }
+
+  /* Smooth scroll behavior */
+  html {
+    scroll-behavior: smooth;
+  }
+
+    .cursor-dot {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      background: #ff5500;
+      border-radius: 50%;
+      box-shadow: 0 0 20px rgba(255, 85, 0, 0.7);
+      pointer-events: none;
+      z-index: 1001;
+      transition: transform 0.08s ease-out;
+    }
+
+    .particle {
+      position: fixed;
+      border-radius: 50%;
+      pointer-events: none;
+      background: radial-gradient(circle, #ff6600, #ffcc00, transparent);
+      opacity: 0.9;
+      animation: explode 0.8s ease-out forwards;
+      filter: blur(2px);
+      z-index: 1000;
+    }
+
+    @keyframes explode {
+      to {
+        transform: translate(var(--x), var(--y)) scale(0.3);
+        opacity: 0;
+        filter: blur(4px);
+      }
+    }
+</style>
+<body>
+  <div class="cursor-dot" id="cursorDot"></div>
+
+<nav>
+  <ul>
+    <li class="active" data-target="home">Home</li>
+    <li data-target="skills">Skills</li>
+    <li data-target="projects">Projects</li>
+    <li data-target="contact">Contact</li>
+  </ul>
+</nav>
+
+<header id="home">
+  <img src="ooooo.png" alt="Sanskar Rangole" />
+  <h1>Sanskar Rangole</h1>
+  <p>Passionate programmer | CSE student</p>
+</header>
+
+<section id="skills">
+  <h2>Skills</h2>
+  <div class="skills">
+    <div class="skill">
+      <h3>Python</h3>
+      <div class="bar-container">
+        <div class="bar" style="width: 90%;"></div>
+      </div>
+    </div>
+    <div class="skill">
+      <h3>Java</h3>
+      <div class="bar-container">
+        <div class="bar" style="width: 75%;"></div>
+      </div>
+    </div>
+    <div class="skill">
+      <h3>Android</h3>
+      <div class="bar-container">
+        <div class="bar" style="width: 80%;"></div>
+      </div>
+    </div>
+    <div class="skill">
+      <h3>Web Development</h3>
+      <div class="bar-container">
+        <div class="bar" style="width: 70%;"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <h2>Projects</h2>
+  <div class="projects">
+    <div class="project-card">
+      <h3>Blaze Voice Assistant</h3>
+      <p>A Python-based voice assistant with Marathi support and AI integration.</p>
+    </div>
+    <div class="project-card">
+      <h3>College Website</h3>
+      <p>A responsive and animated website developed for my college using JavaScript and CSS.</p>
+    </div>
+    <div class="project-card">
+      <h3>Face Recognition System</h3>
+      <p>A system using OpenCV and ML to recognize faces with high accuracy.</p>
+    </div>
+    <div class="project-card">
+      <h3>Solar Tracker</h3>
+      <p>A non-electrical device concept to optimize solar panel efficiency based on sun movement.</p>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+<form action="https://formsubmit.co/rangole591@gmail.com" method="POST">
+  <input type="hidden" name="_captcha" value="false">
+  <input type="hidden" name="_subject" value="New Contact Form Submission!">
+  
+  <label for="name">Name</label>
+  <input id="name" type="text" name="name" placeholder="Your full name" required />
+
+  <label for="email">Email</label>
+  <input id="email" type="email" name="email" placeholder="Your email address" required />
+
+  <label for="message">Message</label>
+  <textarea id="message" name="message" rows="5" placeholder="Your message here..." required></textarea>
+
+  <button type="submit">Send Message</button>
+</form>
+
+</section>
+
+<footer>
+  &copy; 2025 Sanskar Rangole &mdash; Created with ❤️ and code
+</footer>
+
+<script>
+  // Navigation link activation & smooth scroll highlight
+  const navLinks = document.querySelectorAll('nav ul li');
+  const sections = Array.from(navLinks).map(li => document.getElementById(li.dataset.target));
+
+  function setActiveLink() {
+    let index = sections.findIndex((section, i) => {
+      const rect = section.getBoundingClientRect();
+      return rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2;
+    });
+    if(index === -1) index = 0;
+    navLinks.forEach(link => link.classList.remove('active'));
+    navLinks[index].classList.add('active');
+  }
+
+  window.addEventListener('scroll', setActiveLink);
+
+  navLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      const target = document.getElementById(link.dataset.target);
+      target.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+
+  // Animate skill bars on scroll
+  function animateSkills() {
+    const skillsSection = document.getElementById('skills');
+    if (window.scrollY + window.innerHeight > skillsSection.offsetTop + 100) {
+      document.querySelectorAll('.bar').forEach(bar => {
+        const width = bar.style.width;
+        bar.style.width = '0%';
+        setTimeout(() => {
+          bar.style.width = width;
+        }, 200);
+      });
+      window.removeEventListener('scroll', animateSkills);
+    }
+  }
+  window.addEventListener('scroll', animateSkills);
+
+  // Simple contact form submit handler
+  const form = document.getElementById('contactForm');
+  const successMessage = document.getElementById('formSuccess');
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    // Simulate form sending
+    successMessage.textContent = "Thank you! Your message has been sent.";
+    form.reset();
+    setTimeout(() => successMessage.textContent = '', 5000);
+  });
+
+  // Optional: Animate skill bars on page load if visible
+  window.addEventListener('load', () => {
+    if(window.scrollY + window.innerHeight > document.getElementById('skills').offsetTop) {
+      animateSkills();
+    }
+  })
+  ; let cursorX = window.innerWidth / 2;
+  let cursorY = window.innerHeight / 2;
+  let dotX = cursorX, dotY = cursorY;
+
+  const dot = document.getElementById('cursorDot');
+
+  // Easing animation for cursor dot
+  function animateDot() {
+    dotX += (cursorX - dotX) * 0.15;
+    dotY += (cursorY - dotY) * 0.15;
+    dot.style.left = `${dotX - 5}px`;
+    dot.style.top = `${dotY - 5}px`;
+    requestAnimationFrame(animateDot);
+  }
+  animateDot();
+
+  document.addEventListener('mousemove', (e) => {
+    cursorX = e.clientX;
+    cursorY = e.clientY;
+  });
+
+  // Fire particles creation
+  function createFireParticles(x, y) {
+    const count = 14;
+    for (let i = 0; i < count; i++) {
+      const particle = document.createElement('div');
+      particle.className = 'particle';
+
+      const size = Math.random() * 8 + 4;
+      particle.style.width = `${size}px`;
+      particle.style.height = `${size}px`;
+
+      const angle = Math.random() * 2 * Math.PI;
+      const distance = Math.random() * 60 + 10;
+      const offsetX = Math.cos(angle) * distance;
+      const offsetY = Math.sin(angle) * distance;
+
+      particle.style.left = `${x}px`;
+      particle.style.top = `${y}px`;
+      particle.style.setProperty('--x', `${offsetX}px`);
+      particle.style.setProperty('--y', `${offsetY}px`);
+
+      document.body.appendChild(particle);
+      setTimeout(() => particle.remove(), 800);
+    }
+  }
+
+  // Fire particle effect loop (constant)
+  setInterval(() => {
+    createFireParticles(dotX, dotY);
+  }, 70);
+    </script>
+</body>
+</html>
