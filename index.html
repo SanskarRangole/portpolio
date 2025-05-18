@@ -1,12 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<link rel="stylesheet" href="style.css">
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Sanskar Rangole - Interactive Portfolio</title>
 <script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
-
+  <script src="https://cdn.tailwindcss.com"></script> 
 <style>
+    .glow-text {
+      margin-top: 10px;
+      font-size: 2rem;
+      color: red;
+      text-shadow: 0 0 5px red, 0 0 10px red, 0 0 20px red;
+      font-weight: bold;
+      font-family: 'Courier New', Courier, monospace;
+    }
+     .resume-section a {
+      display: inline-block;
+      margin-top: 20px;
+      background-color: orange;
+      padding: 10px 20px;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+    .resume-section a:hover {
+      background-color: white;
+      color: orange;
+    }
+:root {
+  --main-color: #ffa53c;       /* orange */
+  --glow-color: #ffa53c77;     /* orange translucent */
+  --secondary-color: #00ffff;  /* neon blue */
+  --secondary-glow: #00ffff77; /* neon blue translucent */
+  --background-color: #000;    /* black background or your default */
+  --text-shadow-color: #ffa53c;
+}
+
+body.neon-theme {
+  --main-color: #00ffff;
+  --glow-color: #00ffff77;
+  --secondary-color: #ffa53c;
+  --secondary-glow: #ffa53c77;
+  --background-color: #111; /* or a slightly different background for neon mode */
+  --text-shadow-color: #00ffff;
+}
+
   /* Reset */
   * {
     box-sizing: border-box;
@@ -69,31 +109,33 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: transparent
+    background: transparent;
     text-align: center;
     padding: 0 1rem;
   }
-  header img {
-    width: 250px;
-    height: 300px;
-    border-radius: 50%;
-    border: 4px solid #ffa53c;
-    box-shadow: 0 0 30px #ffa53c77;
-    margin-bottom: 1rem;
-    animation: float 4s ease-in-out infinite;
-  }
+header img {
+  width: 250px;
+  height: 320px;
+  border-radius: 50%;
+  border: 4px solid var(--main-color);
+  box-shadow: 0 0 30px var(--glow-color);
+  margin-bottom: 1rem;
+  animation: float 4s ease-in-out infinite;
+  cursor: pointer; /* shows it's clickable */
+}
+
   @keyframes float {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-15px); }
   }
   header h1 {
-    font-size: 2 rem;
+    font-size: 3.5rem;
     margin: 0 0 0.2rem 0;
     color: #ffa53c;
     text-shadow: 0 0 12px #ffa53caa;
   }
   header p {
-    font-size: 2 rem;
+    font-size: 1.4rem;
     max-width: 420px;
     color: #ddd;
   }
@@ -130,7 +172,7 @@
     cursor: default;
   }
   .skill:hover {
-    transform: scale(1.05);
+    transform: scale(1.15);
     box-shadow: 0 0 25px #ffa53c;
   }
   .skill h3 {
@@ -297,7 +339,7 @@
   text-align: center;
   font-family: 'Courier New', monospace;
   color: #00ffff;
-  text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff, 0 0 20px #00ffff;
+  text-shadow: 0 0 5px #ff0000, 0 0 10px #00ffff, 0 0 20px #00ffff;
   animation: pulseGlow 3s infinite ease-in-out;
 }
 
@@ -309,9 +351,116 @@
     text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 30px #00ffff;
   }
 }
+.section {
+  padding: 60px 20px;
+  text-align: center;
+}
+.section {
+  padding: 60px 20px;
+  text-align: center;
+  background: #111;
+  color: white;
+}
+
+.achievements-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.achievement-card {
+  background: #1c1c1c;
+  border-radius: 15px;
+  width: 250px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 0 12px #222;
+  cursor: pointer;
+}
+
+.achievement-card img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-bottom: 3px solid #ff6600;
+}
+
+.achievement-card p {
+  margin: 15px;
+  color: #eee;
+  font-size: 1rem;
+}
+
+.achievement-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 25px #ff6600;
+  background: #1a1a1a;
+}
 
 </style>
+<style> #preloader {
+    background-color: #0d0d0d;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .loader {
+    text-align: center;
+    position: relative;
+  }
+
+  .loader .ring {
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+    border: 6px solid transparent;
+    border-top: 6px solid orange;
+    border-radius: 50%;
+    animation: rotate 1.5s linear infinite;
+    box-shadow: 0 0 20px orange;
+  }
+
+  .loader .text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Orbitron', sans-serif;
+    font-size: 32px;
+    color: white;
+    letter-spacing: 2px;
+    animation: pulse 1.2s ease-in-out infinite;
+  }
+
+  @keyframes rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  @keyframes pulse {
+    0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.7; }
+    100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  }
+  
+</style>
 <body>
+  <!-- Preloader -->
+<div id="preloader">
+  <div class="loader">
+    <span class="ring"></span>
+    <span class="text">SR1</span>
+  </div>
+</div>
   <div class="cursor-dot" id="cursorDot"></div>
 <div id="particles-js" style="position:fixed; top:0; left:0; width:100%; height:100%; z-index:-1;">.kdajnajcnsj</div>
 
@@ -328,8 +477,8 @@
   <img src="ooooo.png" alt="Sanskar Rangole" />
   <h1>Sanskar Rangole</h1>
   <p>Passionate programmer | CSE student</p>
-  <p class="creative-quote">"I didn't follow the code, I create it."</p>
-
+  <p class="creative-quote">"I din't follow the code, I create it."</p>
+ <div class="glow-text">SR1</div>
 </header>
 
 <section id="skills">
@@ -344,13 +493,13 @@
     <div class="skill">
       <h3>Java</h3>
       <div class="bar-container">
-        <div class="bar" style="width: 80%;"></div>
+        <div class="bar" style="width: 85%;"></div>
       </div>
     </div>
     <div class="skill">
       <h3>Android</h3>
       <div class="bar-container">
-        <div class="bar" style="width: 90%;"></div>
+        <div class="bar" style="width: 80%;"></div>
       </div>
     </div>
     <div class="skill">
@@ -402,6 +551,26 @@
 </form>
 
 </section>
+<!-- Achievements Section --><!-- Achievements Section with Images -->
+<!-- Achievements Section with Placeholder Images -->
+<!-- Achievements Section with Real Images -->
+
+
+
+  <!-- Modal / Lightbox -->
+  <div
+    id="modal"
+    class="fixed inset-0 hidden items-center justify-center"
+    onclick="closeModal()"
+  >
+    <img
+      id="modal-img"
+      class="max-w-[90vw] max-h-[90vh] rounded-lg shadow-2xl"
+      src=""
+      alt="Enlarged award"
+    />
+  </div>
+
 
 <footer>
   &copy; 2025 Sanskar Rangole &mdash; Created with ❤️ and code
@@ -485,37 +654,13 @@
     cursorY = e.clientY;
   });
 
-  // Fire particles creation
-  function createFireParticles(x, y) {
-    const count = 14;
-    for (let i = 0; i < count; i++) {
-      const particle = document.createElement('div');
-      particle.className = 'particle';
-
-      const size = Math.random() * 8 + 4;
-      particle.style.width = `${size}px`;
-      particle.style.height = `${size}px`;
-
-      const angle = Math.random() * 2 * Math.PI;
-      const distance = Math.random() * 60 + 10;
-      const offsetX = Math.cos(angle) * distance;
-      const offsetY = Math.sin(angle) * distance;
-
-      particle.style.left = `${x}px`;
-      particle.style.top = `${y}px`;
-      particle.style.setProperty('--x', `${offsetX}px`);
-      particle.style.setProperty('--y', `${offsetY}px`);
-
-      document.body.appendChild(particle);
-      setTimeout(() => particle.remove(), 800);
-    }
-  }
 
   // Fire particle effect loop (constant)
   setInterval(() => {
     createFireParticles(dotX, dotY);
   }, 70);
     </script>
+    
     <script>
   // Rainbow Cursor Effect
     document.addEventListener('mousemove', e => {
@@ -549,7 +694,7 @@
         type: "circle"
       },
       opacity: {
-        value: 0.6,
+        value: 6.6,
         random: true
       },
       size: {
@@ -595,7 +740,24 @@
       }
     }
   });
+  
+  const image = document.querySelector('header img');
+
+  image.addEventListener('click', () => {
+    image.classList.toggle('neon-blue-theme');
+  });
 </script>
 
+</script>
+
+
+<script> window.addEventListener("load", function () {
+    const preloader = document.getElementById("preloader");
+    setTimeout(() => {
+      preloader.style.opacity = "0";
+      preloader.style.transition = "opacity 0.8s ease";
+      setTimeout(() => preloader.style.display = "none", 800);
+    }, 1800); // adjust delay if needed
+  });</script>
 </body>
 </html>
